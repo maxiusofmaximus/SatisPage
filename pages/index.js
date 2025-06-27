@@ -1,30 +1,100 @@
 import { useState, useEffect } from 'react';
 import Chatbot from '../components/Chatbot';
 
-const productosPorIngot = {
-  iron_ingot: [
-    { key: 'planchas', label: 'Planchas de hierro', icon: <img src="/iron_plate.webp" alt="Planchas de hierro" style={{width: 32, height: 32}} /> },
-    { key: 'barras', label: 'Barras de hierro', icon: <img src="/iron_rod.webp" alt="Barras de hierro" style={{width: 32, height: 32}} /> },
-    { key: 'tornillos', label: 'Tornillos', icon: <img src="/screws.webp" alt="Tornillos" style={{width: 32, height: 32}} /> },
-    { key: 'reforzadas', label: 'Planchas reforzadas', icon: <img src="/reinforced_plate.webp" alt="Planchas reforzadas" style={{width: 32, height: 32}} /> },
-  ],
-  copper_ingot: [
-    { key: 'alambre', label: 'Alambre', icon: <img src="/wire.webp" alt="Alambre" style={{width: 32, height: 32}} /> },
-    { key: 'cable', label: 'Cable', icon: <img src="/cable.webp" alt="Cable" style={{width: 32, height: 32}} /> },
-    { key: 'lamina_cobre', label: 'Lámina de cobre', icon: <img src="/copper_sheet.webp" alt="Lámina de cobre" style={{width: 32, height: 32}} /> },
-  ]
-};
+// Utilidad para obtener la imagen base64 de un producto por nombre
+function getImageByName(name, recipesData) {
+  if (!recipesData || recipesData.length === 0) return null;
+  // Coincidencia exacta primero
+  for (const receta of recipesData) {
+    if (receta.products) {
+      const prod = receta.products.find(
+        p => p.name && p.name.toLowerCase() === name.toLowerCase()
+      );
+      if (prod && prod.image_base64) return prod.image_base64;
+    }
+    if (receta.ingredients) {
+      const ing = receta.ingredients.find(
+        i => i.name && i.name.toLowerCase() === name.toLowerCase()
+      );
+      if (ing && ing.image_base64) return ing.image_base64;
+    }
+    if (
+      receta.produced_in &&
+      receta.produced_in.name &&
+      receta.produced_in.name.toLowerCase() === name.toLowerCase()
+    ) {
+      if (receta.produced_in.image_base64) return receta.produced_in.image_base64;
+    }
+  }
+  // Si no hay coincidencia exacta, buscar por includes (opcional)
+  for (const receta of recipesData) {
+    if (receta.products) {
+      const prod = receta.products.find(
+        p => p.name && p.name.toLowerCase().includes(name.toLowerCase())
+      );
+      if (prod && prod.image_base64) return prod.image_base64;
+    }
+    if (receta.ingredients) {
+      const ing = receta.ingredients.find(
+        i => i.name && i.name.toLowerCase().includes(name.toLowerCase())
+      );
+      if (ing && ing.image_base64) return ing.image_base64;
+    }
+    if (
+      receta.produced_in &&
+      receta.produced_in.name &&
+      receta.produced_in.name.toLowerCase().includes(name.toLowerCase())
+    ) {
+      if (receta.produced_in.image_base64) return receta.produced_in.image_base64;
+    }
+  }
+  return null;
+}
 
 export default function Home() {
   const [ingot, setIngot] = useState('iron_ingot');
   const [cantidad, setCantidad] = useState('');
   const [trigger, setTrigger] = useState(0);
   const [dark, setDark] = useState(false);
-  const [producto, setProducto] = useState(productosPorIngot[ingot][0].key);
+  const [producto, setProducto] = useState('planchas');
+  const [recipesData, setRecipesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('/data/recipes.json')
+      .then(res => {
+        if (!res.ok) throw new Error('No se pudo cargar recipes.json');
+        return res.json();
+      })
+      .then(data => {
+        setRecipesData(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  // Actualiza productosPorIngot dinámicamente cuando recipesData esté listo
+  const productosPorIngot = {
+    iron_ingot: [
+      { key: 'planchas', label: 'Planchas de hierro', icon: <img src={getImageByName('iron plate', recipesData)} alt="Planchas de hierro" style={{width: 32, height: 32}} /> },
+      { key: 'barras', label: 'Barras de hierro', icon: <img src={getImageByName('iron rod', recipesData)} alt="Barras de hierro" style={{width: 32, height: 32}} /> },
+      { key: 'tornillos', label: 'Tornillos', icon: <img src={getImageByName('screw', recipesData)} alt="Tornillos" style={{width: 32, height: 32}} /> },
+      { key: 'reforzadas', label: 'Planchas reforzadas', icon: <img src={getImageByName('reinforced iron plate', recipesData)} alt="Planchas reforzadas" style={{width: 32, height: 32}} /> },
+    ],
+    copper_ingot: [
+      { key: 'alambre', label: 'Alambre', icon: <img src={getImageByName('wire', recipesData)} alt="Alambre" style={{width: 32, height: 32}} /> },
+      { key: 'cable', label: 'Cable', icon: <img src={getImageByName('cable', recipesData)} alt="Cable" style={{width: 32, height: 32}} /> },
+      { key: 'lamina_cobre', label: 'Lámina de cobre', icon: <img src={getImageByName('copper sheet', recipesData)} alt="Lámina de cobre" style={{width: 32, height: 32}} /> },
+    ]
+  };
 
   useEffect(() => {
     setProducto(productosPorIngot[ingot][0].key);
-  }, [ingot]);
+  }, [ingot, recipesData]);
 
   useEffect(() => {
     // Cargar Bootstrap desde CDN solo si no está ya cargado
@@ -94,6 +164,9 @@ export default function Home() {
     );
   }
 
+  if (loading) return <div className="container py-4">Cargando datos...</div>;
+  if (error) return <div className="container py-4" style={{color:'red'}}>Error: {error}</div>;
+
   return (
     <div className={dark ? 'bg-dark text-light min-vh-100' : 'bg-light text-dark min-vh-100'} style={{minHeight: '100vh'}}>
       <div className="container py-4">
@@ -124,7 +197,7 @@ export default function Home() {
                 title="Lingote de hierro"
                 style={{padding: 2, width: 48, height: 48, background: ingot === 'iron_ingot' ? '' : 'transparent'}}
               >
-                <img src="/iron_ingot.webp" alt="Lingote de hierro" style={{width: 32, height: 32}} />
+                <img src={getImageByName('iron ingot', recipesData)} alt="Lingote de hierro" style={{width: 32, height: 32}} />
               </button>
               <button
                 type="button"
@@ -133,7 +206,7 @@ export default function Home() {
                 title="Lingote de cobre"
                 style={{padding: 2, width: 48, height: 48, background: ingot === 'copper_ingot' ? '' : 'transparent'}}
               >
-                <img src="/copper_ingot.webp" alt="Lingote de cobre" style={{width: 32, height: 32}} />
+                <img src={getImageByName('copper ingot', recipesData)} alt="Lingote de cobre" style={{width: 32, height: 32}} />
               </button>
             </div>
           </div>
