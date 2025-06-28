@@ -142,7 +142,16 @@ function ConstructoresProduccion({ lingotes, producto, recipesData }) {
   const alambrePorCable = 24, cablePorLote = 8;
   const lingotesPorLamina = 20, laminaPorLote = 10;
 
+  // Obtener imagen y nombre del constructor real
   const constructor = getConstructorImage(producto, recipesData);
+  const constructorImg = constructor?.image;
+  const constructorName = constructor?.name;
+
+  // Helper para renderizar la imagen del constructor
+  const renderConstructorImg = () =>
+    constructorImg ? (
+      <img src={constructorImg} alt={constructorName || 'Constructor'} style={{height:28,marginLeft:4,verticalAlign:'middle',borderRadius:4}} title={constructorName} />
+    ) : null;
 
   if (producto === 'reforzadas') {
     const lingotesPorPaquete = 45 + 15;
@@ -156,24 +165,24 @@ function ConstructoresProduccion({ lingotes, producto, recipesData }) {
     const ensambladoras = paquetes;
     return (
       <div className="d-flex flex-wrap gap-4 justify-content-center align-items-center mb-3">
-        <span title="Constructores de planchas"><img src={getImageByName('iron plate', recipesData)} alt="Plancha" style={{height:28,verticalAlign:'middle'}} /> × {constructoresPlanchas} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
-        <span title="Constructores de barras"><img src={getImageByName('iron rod', recipesData)} alt="Barra" style={{height:28,verticalAlign:'middle'}} /> × {constructoresBarras} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
-        <span title="Constructores de tornillos"><img src={getImageByName('screw', recipesData)} alt="Tornillo" style={{height:28,verticalAlign:'middle'}} /> × {constructoresTornillos} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
-        <span title="Ensambladoras de reforzadas"><img src={getImageByName('reinforced iron plate', recipesData)} alt="Reforzada" style={{height:28,verticalAlign:'middle'}} /> × {ensambladoras} <img src={imagenEnsambladora} alt="Ensambladora" style={{height:28,marginLeft:4}} /></span>
+        <span title="Constructores de planchas"><img src={getImageByName('iron plate', recipesData)} alt="Plancha" style={{height:28,verticalAlign:'middle'}} /> × {constructoresPlanchas} {renderConstructorImg()}</span>
+        <span title="Constructores de barras"><img src={getImageByName('iron rod', recipesData)} alt="Barra" style={{height:28,verticalAlign:'middle'}} /> × {constructoresBarras} {renderConstructorImg()}</span>
+        <span title="Constructores de tornillos"><img src={getImageByName('screw', recipesData)} alt="Tornillo" style={{height:28,verticalAlign:'middle'}} /> × {constructoresTornillos} {renderConstructorImg()}</span>
+        <span title="Ensambladoras de reforzadas"><img src={getImageByName('reinforced iron plate', recipesData)} alt="Reforzada" style={{height:28,verticalAlign:'middle'}} /> × {ensambladoras} {renderConstructorImg()}</span>
       </div>
     );
   } else if (producto === 'planchas') {
     const constructoresPlanchas = (lingotes / lingotesPorPlanchas);
     return (
       <div className="d-flex gap-4 justify-content-center align-items-center mb-3">
-        <span title="Constructores de planchas"><img src={getImageByName('iron plate', recipesData)} alt="Plancha" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresPlanchas))} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
+        <span title="Constructores de planchas"><img src={getImageByName('iron plate', recipesData)} alt="Plancha" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresPlanchas))} {renderConstructorImg()}</span>
       </div>
     );
   } else if (producto === 'barras') {
     const constructoresBarras = (lingotes / lingotesPorBarras);
     return (
       <div className="d-flex gap-4 justify-content-center align-items-center mb-3">
-        <span title="Constructores de barras"><img src={getImageByName('iron rod', recipesData)} alt="Barra" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresBarras))} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
+        <span title="Constructores de barras"><img src={getImageByName('iron rod', recipesData)} alt="Barra" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresBarras))} {renderConstructorImg()}</span>
       </div>
     );
   } else if (producto === 'tornillos') {
@@ -183,15 +192,15 @@ function ConstructoresProduccion({ lingotes, producto, recipesData }) {
     const constructoresTornillos = Math.ceil(maxTornillos / tornillosPorLote);
     return (
       <div className="d-flex gap-4 justify-content-center align-items-center mb-3">
-        <span title="Constructores de barras"><img src={getImageByName('iron rod', recipesData)} alt="Barra" style={{height:28,verticalAlign:'middle'}} /> × {constructoresBarras} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
-        <span title="Constructores de tornillos"><img src={getImageByName('screw', recipesData)} alt="Tornillo" style={{height:28,verticalAlign:'middle'}} /> × {constructoresTornillos} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
+        <span title="Constructores de barras"><img src={getImageByName('iron rod', recipesData)} alt="Barra" style={{height:28,verticalAlign:'middle'}} /> × {constructoresBarras} {renderConstructorImg()}</span>
+        <span title="Constructores de tornillos"><img src={getImageByName('screw', recipesData)} alt="Tornillo" style={{height:28,verticalAlign:'middle'}} /> × {constructoresTornillos} {renderConstructorImg()}</span>
       </div>
     );
   } else if (producto === 'alambre') {
     const constructoresAlambre = lingotes / lingotesPorAlambre;
     return (
       <div className="d-flex gap-4 justify-content-center align-items-center mb-3">
-        <span title="Constructores de alambre"><img src={getImageByName('wire', recipesData)} alt="Alambre" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresAlambre))} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
+        <span title="Constructores de alambre"><img src={getImageByName('wire', recipesData)} alt="Alambre" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresAlambre))} {renderConstructorImg()}</span>
       </div>
     );
   } else if (producto === 'cable') {
@@ -200,15 +209,15 @@ function ConstructoresProduccion({ lingotes, producto, recipesData }) {
     const constructoresCable = maxAlambre / alambrePorCable;
     return (
       <div className="d-flex gap-4 justify-content-center align-items-center mb-3">
-        <span title="Constructores de alambre"><img src={getImageByName('wire', recipesData)} alt="Alambre" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresAlambre))} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
-        <span title="Constructores de cable"><img src={getImageByName('cable', recipesData)} alt="Cable" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresCable))} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
+        <span title="Constructores de alambre"><img src={getImageByName('wire', recipesData)} alt="Alambre" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresAlambre))} {renderConstructorImg()}</span>
+        <span title="Constructores de cable"><img src={getImageByName('cable', recipesData)} alt="Cable" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresCable))} {renderConstructorImg()}</span>
       </div>
     );
   } else if (producto === 'lamina') {
     const constructoresLamina = lingotes / lingotesPorLamina;
     return (
       <div className="d-flex gap-4 justify-content-center align-items-center mb-3">
-        <span title="Constructores de lámina de cobre"><img src={getImageByName('copper sheet', recipesData)} alt="Lámina de cobre" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresLamina))} <img src={imagenEnsambladora} alt="Constructor" style={{height:28,marginLeft:4}} /></span>
+        <span title="Constructores de lámina de cobre"><img src={getImageByName('copper sheet', recipesData)} alt="Lámina de cobre" style={{height:28,verticalAlign:'middle'}} /> × {Math.max(1,Math.floor(constructoresLamina))} {renderConstructorImg()}</span>
       </div>
     );
   }
