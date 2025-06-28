@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "next": "^15.3.4",
     "node-nlp": "^3.10.2",
     "react": "18.2.0",
     "react-dom": "18.2.0"
