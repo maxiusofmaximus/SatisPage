@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Chatbot from '../components/Chatbot';
+import MetaHead from '../components/MetaHead';
 
 // Utilidad para obtener la imagen base64 de un producto por nombre
 function getImageByName(name, recipesData) {
@@ -168,90 +169,93 @@ export default function Home() {
   if (error) return <div className="container py-4" style={{color:'red'}}>Error: {error}</div>;
 
   return (
-    <div className={dark ? 'bg-dark text-light min-vh-100' : 'bg-light text-dark min-vh-100'} style={{minHeight: '100vh'}}>
-      <div className="container py-4">
-        <div className="row align-items-center mb-4">
-          <div className="col">
-            <h1 className="fw-bold mb-0">
-              🛠️ Calculadora de Producción
-            </h1>
-          </div>
-          <div className="col-auto">
-            <DarkModeToggle />
-          </div>
-        </div>
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-            setTrigger(trigger + 1);
-          }}
-          className="d-flex flex-wrap align-items-center gap-3 mb-4"
-        >
-          <div className="d-flex align-items-center gap-2">
-            <span className="fw-semibold">Tipo de lingote:</span>
-            <div className="btn-group" role="group" aria-label="Selector de lingote">
-              <button
-                type="button"
-                className={'btn d-flex align-items-center ' + (ingot === 'iron_ingot' ? (dark ? 'btn-info' : 'btn-primary') : (dark ? 'btn-outline-info' : 'btn-outline-primary'))}
-                onClick={() => setIngot('iron_ingot')}
-                title="Lingote de hierro"
-                style={{padding: 2, width: 48, height: 48, background: ingot === 'iron_ingot' ? '' : 'transparent'}}
-              >
-                <img src={getImageByName('iron ingot', recipesData)} alt="Lingote de hierro" style={{width: 32, height: 32}} />
-              </button>
-              <button
-                type="button"
-                className={'btn d-flex align-items-center ' + (ingot === 'copper_ingot' ? (dark ? 'btn-info' : 'btn-primary') : (dark ? 'btn-outline-info' : 'btn-outline-primary'))}
-                onClick={() => setIngot('copper_ingot')}
-                title="Lingote de cobre"
-                style={{padding: 2, width: 48, height: 48, background: ingot === 'copper_ingot' ? '' : 'transparent'}}
-              >
-                <img src={getImageByName('copper ingot', recipesData)} alt="Lingote de cobre" style={{width: 32, height: 32}} />
-              </button>
+    <>
+      <MetaHead />
+      <div className={dark ? 'bg-dark text-light min-vh-100' : 'bg-light text-dark min-vh-100'} style={{minHeight: '100vh'}}>
+        <div className="container py-4">
+          <div className="row align-items-center mb-4">
+            <div className="col">
+              <h1 className="fw-bold mb-0">
+                🛠️ Calculadora de Producción
+              </h1>
+            </div>
+            <div className="col-auto">
+              <DarkModeToggle />
             </div>
           </div>
-          <div className="d-flex align-items-center gap-2">
-            <label className="col-form-label fw-semibold mb-0" htmlFor="cantidad">Cantidad:</label>
-            <input
-              id="cantidad"
-              type="number"
-              min="1"
-              value={cantidad}
-              onChange={e => setCantidad(e.target.value)}
-              required
-              className="form-control"
-              style={{width: 220, minWidth: 120}}
-              placeholder="Cantidad de lingotes"
-            />
-          </div>
-          <div className="d-flex align-items-center gap-2">
-            <span className="fw-semibold">Producto:</span>
-            <div className="btn-group" role="group" aria-label="Selector de producto">
-              {productosPorIngot[ingot].map(p => (
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              setTrigger(trigger + 1);
+            }}
+            className="d-flex flex-wrap align-items-center gap-3 mb-4"
+          >
+            <div className="d-flex align-items-center gap-2">
+              <span className="fw-semibold">Tipo de lingote:</span>
+              <div className="btn-group" role="group" aria-label="Selector de lingote">
                 <button
-                  key={p.key}
                   type="button"
-                  className={
-                    'btn d-flex align-items-center ' + (producto === p.key ? (dark ? 'btn-info' : 'btn-primary') : (dark ? 'btn-outline-info' : 'btn-outline-primary'))
-                  }
-                  title={p.label}
-                  onClick={() => setProducto(p.key)}
-                  style={{fontSize: 20, padding: 2, width: 48, height: 48, background: producto === p.key ? '' : 'transparent'}}
+                  className={'btn d-flex align-items-center ' + (ingot === 'iron_ingot' ? (dark ? 'btn-info' : 'btn-primary') : (dark ? 'btn-outline-info' : 'btn-outline-primary'))}
+                  onClick={() => setIngot('iron_ingot')}
+                  title="Lingote de hierro"
+                  style={{padding: 2, width: 48, height: 48, background: ingot === 'iron_ingot' ? '' : 'transparent'}}
                 >
-                  {p.icon}
+                  <img src={getImageByName('iron ingot', recipesData)} alt="Lingote de hierro" style={{width: 32, height: 32}} />
                 </button>
-              ))}
+                <button
+                  type="button"
+                  className={'btn d-flex align-items-center ' + (ingot === 'copper_ingot' ? (dark ? 'btn-info' : 'btn-primary') : (dark ? 'btn-outline-info' : 'btn-outline-primary'))}
+                  onClick={() => setIngot('copper_ingot')}
+                  title="Lingote de cobre"
+                  style={{padding: 2, width: 48, height: 48, background: ingot === 'copper_ingot' ? '' : 'transparent'}}
+                >
+                  <img src={getImageByName('copper ingot', recipesData)} alt="Lingote de cobre" style={{width: 32, height: 32}} />
+                </button>
+              </div>
             </div>
+            <div className="d-flex align-items-center gap-2">
+              <label className="col-form-label fw-semibold mb-0" htmlFor="cantidad">Cantidad:</label>
+              <input
+                id="cantidad"
+                type="number"
+                min="1"
+                value={cantidad}
+                onChange={e => setCantidad(e.target.value)}
+                required
+                className="form-control"
+                style={{width: 220, minWidth: 120}}
+                placeholder="Cantidad de lingotes"
+              />
+            </div>
+            <div className="d-flex align-items-center gap-2">
+              <span className="fw-semibold">Producto:</span>
+              <div className="btn-group" role="group" aria-label="Selector de producto">
+                {productosPorIngot[ingot].map(p => (
+                  <button
+                    key={p.key}
+                    type="button"
+                    className={
+                      'btn d-flex align-items-center ' + (producto === p.key ? (dark ? 'btn-info' : 'btn-primary') : (dark ? 'btn-outline-info' : 'btn-outline-primary'))
+                    }
+                    title={p.label}
+                    onClick={() => setProducto(p.key)}
+                    style={{fontSize: 20, padding: 2, width: 48, height: 48, background: producto === p.key ? '' : 'transparent'}}
+                  >
+                    {p.icon}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <button type="submit" className="btn btn-success">Calcular Producción</button>
+          </form>
+          <hr className={dark ? 'border-light' : 'border-dark'} style={{margin: '40px 0'}} />
+          <div className="d-flex align-items-center mb-3">
+            <span style={{fontSize: 28, marginRight: 8}}>🤖</span>
+            <h2 className="fw-bold mb-0">Chatbot de IA</h2>
           </div>
-          <button type="submit" className="btn btn-success">Calcular Producción</button>
-        </form>
-        <hr className={dark ? 'border-light' : 'border-dark'} style={{margin: '40px 0'}} />
-        <div className="d-flex align-items-center mb-3">
-          <span style={{fontSize: 28, marginRight: 8}}>🤖</span>
-          <h2 className="fw-bold mb-0">Chatbot de IA</h2>
+          <Chatbot lingotes={cantidad} trigger={trigger} dark={dark} producto={producto} ingot={ingot} onToggleDark={() => setDark(d => !d)} />
         </div>
-        <Chatbot lingotes={cantidad} trigger={trigger} dark={dark} producto={producto} ingot={ingot} onToggleDark={() => setDark(d => !d)} />
       </div>
-    </div>
+    </>
   );
 }
