@@ -1,47 +1,42 @@
 # Calculadora de Producción de Hierro 🛠️
 
-Esta es una calculadora web diseñada específicamente para optimizar la producción de hierro en juegos de fabricación. La aplicación ayuda a calcular la mejor distribución de recursos para maximizar la producción de planchas de hierro reforzadas.
+Este proyecto es una aplicación web construida con **Next.js** y React. Calcula la mejor distribución de recursos para maximizar la producción de planchas de hierro reforzadas en juegos de fabricación.
 
 ## Características 🌟
 
-- Interfaz web simple y fácil de usar
-- Cálculos en tiempo real
+- Interfaz web moderna y responsive (Bootstrap)
+- Cálculos en tiempo real usando React
+- Chatbot integrado
 - Optimización automática de recursos
-- Diseño responsive con Bootstrap
 - Explicaciones detalladas de los cálculos
 
-## Cómo Funciona 🔍
+## Estructura del Proyecto 📁
 
-La calculadora:
-1. Toma como entrada la cantidad de lingotes de metal disponibles
-2. Calcula la distribución óptima entre:
-   - Producción de planchas de metal
-   - Producción de barras de hierro (que se convierten en tornillos)
-3. Determina la cantidad máxima de planchas reforzadas que se pueden producir
-4. Muestra un resumen detallado de la producción
+- `/pages` — Páginas principales de la app (Next.js)
+- `/components` — Componentes reutilizables (Calculator, Chatbot)
+- `/public/data/recipes.json` — Datos de recetas usados por la calculadora
 
-## Fórmulas de Producción 📊
+## Cómo Ejecutar Localmente 🚀
 
-- 30 lingotes → 20 planchas de metal
-- 1 lingote → 1 barra de hierro
-- 10 barras → 40 tornillos
-- 1 plancha reforzada requiere:
-  - 30 planchas de metal
-  - 60 tornillos
+1. Instala dependencias:
 
-## Tecnologías Utilizadas 💻
+   ```bash
+   npm install
+   ```
 
-- HTML5
-- CSS3
-- JavaScript
-- Bootstrap 5.3.0
+2. Inicia el servidor de desarrollo:
 
-## Cómo Usar 🚀
+   ```bash
+   npm run dev
+   ```
 
-1. Abre el archivo `index.html` en tu navegador
-2. Ingresa la cantidad de lingotes de metal disponibles
-3. Haz clic en "Calcular Producción"
-4. Revisa los resultados detallados
+3. Abre [http://localhost:3000](http://localhost:3000)
+
+## Deploy en Vercel 🌐
+
+1. Sube el proyecto a GitHub/GitLab/Bitbucket.
+2. En Vercel, selecciona **Next.js** como framework.
+3. ¡Listo! Vercel detectará la configuración automáticamente.
 
 ## Autor ✍️
 
@@ -49,4 +44,4 @@ Pedro Abelardo Alvarez Ospina
 
 ## Licencia 📄
 
-Este proyecto está bajo la Licencia MIT
+MIT
