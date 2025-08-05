@@ -1,0 +1,330 @@
+{
+  "constructors": {
+    "smelter": {
+      "id": "smelter",
+      "name": "Smelter",
+      "name_es": "Fundidor",
+      "type": "smelting",
+      "description": "Smelts ore into ingots",
+      "description_es": "Funde mineral en lingotes",
+      "power_consumption": 4,
+      "recipes": [
+        "iron_ingot",
+        "copper_ingot",
+        "steel_ingot"
+      ],
+      "production_rates": {
+        "iron_ingot": {
+          "input": {
+            "iron_ore": 30
+          },
+          "output": {
+            "iron_ingot": 30
+          },
+          "cycle_time": 2.0
+        },
+        "copper_ingot": {
+          "input": {
+            "copper_ore": 30
+          },
+          "output": {
+            "copper_ingot": 30
+          },
+          "cycle_time": 2.0
+        },
+        "steel_ingot": {
+          "input": {
+            "iron_ore": 45,
+            "coal": 45
+          },
+          "output": {
+            "steel_ingot": 45
+          },
+          "cycle_time": 4.0
+        }
+      },
+      "overclocking": {
+        "min_percentage": 1,
+        "max_percentage": 250,
+        "default_percentage": 100,
+        "power_multiplier": 1.6
+      },
+      "image": "Imagen_por_poner"
+    },
+    "constructor": {
+      "id": "constructor",
+      "name": "Constructor",
+      "name_es": "Constructor",
+      "type": "construction",
+      "description": "Constructs basic parts",
+      "description_es": "Construye partes básicas",
+      "power_consumption": 4,
+      "recipes": [
+        "iron_plate",
+        "iron_rod",
+        "screw",
+        "wire"
+      ],
+      "production_rates": {
+        "iron_plate": {
+          "input": {
+            "iron_ingot": 30
+          },
+          "output": {
+            "iron_plate": 2
+          },
+          "cycle_time": 6.0,
+          "per_minute": {
+            "input": {
+              "iron_ingot": 30
+            },
+            "output": {
+              "iron_plate": 20
+            }
+          }
+        },
+        "iron_rod": {
+          "input": {
+            "iron_ingot": 15
+          },
+          "output": {
+            "iron_rod": 15
+          },
+          "cycle_time": 4.0,
+          "per_minute": {
+            "input": {
+              "iron_ingot": 225
+            },
+            "output": {
+              "iron_rod": 225
+            }
+          }
+        },
+        "screw": {
+          "input": {
+            "iron_rod": 10
+          },
+          "output": {
+            "screw": 40
+          },
+          "cycle_time": 6.0,
+          "per_minute": {
+            "input": {
+              "iron_rod": 100
+            },
+            "output": {
+              "screw": 400
+            }
+          }
+        },
+        "wire": {
+          "input": {
+            "copper_ingot": 15
+          },
+          "output": {
+            "wire": 30
+          },
+          "cycle_time": 4.0,
+          "per_minute": {
+            "input": {
+              "copper_ingot": 225
+            },
+            "output": {
+              "wire": 450
+            }
+          }
+        }
+      },
+      "overclocking": {
+        "min_percentage": 1,
+        "max_percentage": 250,
+        "default_percentage": 100,
+        "power_multiplier": 1.6
+      },
+      "image": "Imagen_por_poner"
+    },
+    "assembler": {
+      "id": "assembler",
+      "name": "Assembler",
+      "name_es": "Ensamblador",
+      "type": "assembly",
+      "description": "Assembles complex parts",
+      "description_es": "Ensambla partes complejas",
+      "power_consumption": 15,
+      "recipes": [
+        "reinforced_iron_plate",
+        "rotor",
+        "modular_frame"
+      ],
+      "production_rates": {
+        "reinforced_iron_plate": {
+          "input": {
+            "iron_plate": 30,
+            "screw": 60
+          },
+          "output": {
+            "reinforced_iron_plate": 5
+          },
+          "cycle_time": 12.0,
+          "per_minute": {
+            "input": {
+              "iron_plate": 150,
+              "screw": 300
+            },
+            "output": {
+              "reinforced_iron_plate": 25
+            }
+          }
+        },
+        "rotor": {
+          "input": {
+            "iron_rod": 20,
+            "screw": 100
+          },
+          "output": {
+            "rotor": 4
+          },
+          "cycle_time": 15.0,
+          "per_minute": {
+            "input": {
+              "iron_rod": 80,
+              "screw": 400
+            },
+            "output": {
+              "rotor": 16
+            }
+          }
+        },
+        "modular_frame": {
+          "input": {
+            "reinforced_iron_plate": 3,
+            "iron_rod": 12
+          },
+          "output": {
+            "modular_frame": 2
+          },
+          "cycle_time": 60.0,
+          "per_minute": {
+            "input": {
+              "reinforced_iron_plate": 3,
+              "iron_rod": 12
+            },
+            "output": {
+              "modular_frame": 2
+            }
+          }
+        }
+      },
+      "overclocking": {
+        "min_percentage": 1,
+        "max_percentage": 250,
+        "default_percentage": 100,
+        "power_multiplier": 1.6
+      },
+      "image": "Imagen_por_poner"
+    },
+    "manufacturer": {
+      "id": "manufacturer",
+      "name": "Manufacturer",
+      "name_es": "Fabricante",
+      "type": "manufacturing",
+      "description": "Manufactures advanced components",
+      "description_es": "Fabrica componentes avanzados",
+      "power_consumption": 55,
+      "recipes": [
+        "heavy_modular_frame",
+        "computer",
+        "motor"
+      ],
+      "production_rates": {
+        "heavy_modular_frame": {
+          "input": {
+            "modular_frame": 5,
+            "steel_pipe": 15,
+            "encased_industrial_beam": 5,
+            "screw": 100
+          },
+          "output": {
+            "heavy_modular_frame": 2
+          },
+          "cycle_time": 30.0
+        },
+        "computer": {
+          "input": {
+            "circuit_board": 10,
+            "cable": 9,
+            "plastic": 18,
+            "screw": 52
+          },
+          "output": {
+            "computer": 2.5
+          },
+          "cycle_time": 24.0
+        },
+        "motor": {
+          "input": {
+            "rotor": 2,
+            "stator": 2
+          },
+          "output": {
+            "motor": 1
+          },
+          "cycle_time": 12.0
+        }
+      },
+      "overclocking": {
+        "min_percentage": 1,
+        "max_percentage": 250,
+        "default_percentage": 100,
+        "power_multiplier": 1.6
+      },
+      "image": "Imagen_por_poner"
+    },
+    "foundry": {
+      "id": "foundry",
+      "name": "Foundry",
+      "name_es": "Fundición",
+      "type": "smelting",
+      "description": "Advanced smelting facility",
+      "description_es": "Instalación de fundición avanzada",
+      "power_consumption": 16,
+      "recipes": [
+        "steel_ingot"
+      ],
+      "production_rates": {
+        "steel_ingot": {
+          "input": {
+            "iron_ore": 45,
+            "coal": 45
+          },
+          "output": {
+            "steel_ingot": 45
+          },
+          "cycle_time": 4.0
+        }
+      },
+      "overclocking": {
+        "min_percentage": 1,
+        "max_percentage": 250,
+        "default_percentage": 100,
+        "power_multiplier": 1.6
+      },
+      "image": "Imagen_por_poner"
+    }
+  },
+  "recipe_constructor_mapping": {
+    "iron_plate": "constructor",
+    "iron_rod": "constructor",
+    "screw": "constructor",
+    "wire": "constructor",
+    "iron_ingot": "smelter",
+    "copper_ingot": "smelter",
+    "steel_ingot": "foundry",
+    "reinforced_iron_plate": "assembler",
+    "rotor": "assembler",
+    "modular_frame": "assembler",
+    "heavy_modular_frame": "manufacturer",
+    "computer": "manufacturer",
+    "motor": "manufacturer"
+  }
+}

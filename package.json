@@ -1,0 +1,24 @@
+{
+  "name": "satispage",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "start:secure": "node scripts/secure-start.js index.js",
+    "dev:secure": "node scripts/secure-start.js --allow-fs-write=./src index.js",
+    "security-check": "npm audit && node scripts/verify-oss-rebuild.js",
+    "install:secure": "npx npq install",
+    "prestart": "npm run security-check"
+  },
+  "dependencies": {
+    "next": "^15.3.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "better-npm-audit": "^3.7.3",
+    "npq": "^3.10.0"
+  }
+}
