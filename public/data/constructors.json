@@ -68,7 +68,7 @@
       "production_rates": {
         "iron_plate": {
           "input": {
-            "iron_ingot": 30
+            "iron_ingot": 3
           },
           "output": {
             "iron_plate": 2
@@ -85,18 +85,18 @@
         },
         "iron_rod": {
           "input": {
-            "iron_ingot": 15
+            "iron_ingot": 1
           },
           "output": {
-            "iron_rod": 15
+            "iron_rod": 1
           },
           "cycle_time": 4.0,
           "per_minute": {
             "input": {
-              "iron_ingot": 225
+              "iron_ingot": 15
             },
             "output": {
-              "iron_rod": 225
+              "iron_rod": 15
             }
           }
         },
